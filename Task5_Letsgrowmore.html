@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Result Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Student Result Management System</h1>
+    <form id="resultForm">
+        <label for="studentName">Student Name:</label>
+        <input type="text" id="studentName" required>
+        
+        <label for="subject1">Subject 1:</label>
+        <input type="text" id="subject1" required>
+        
+        <label for="marks1">Marks 1:</label>
+        <input type="number" id="marks1" required>
+
+        <label for="subject2">Subject 2:</label>
+        <input type="text" id="subject2" required>
+
+        <label for="marks2">Marks 2:</label>
+        <input type="number" id="marks2" required>
+
+        <label for="subject3">Subject 3:</label>
+        <input type="text" id="subject3" required>
+
+        <label for="marks3">Marks 3:</label>
+        <input type="number" id="marks3" required>
+        
+        <button type="button" onclick="addResult()">Add Result</button>
+    </form>
+
+    <div id="resultTable">
+        <h2>Results</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Subject 1</th>
+                    <th>Marks 1</th>
+                    <th>Subject 2</th>
+                    <th>Marks 2</th>
+                    <th>Subject 3</th>
+                    <th>Marks 3</th>
+                    <th>Percentage</th>
+                    <th>Grade</th>
+                </tr>
+            </thead>
+            <tbody id="resultBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .container {
+        max-width: 800px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+    
+    form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    
+    label {
+        width: calc(33.33% - 10px);
+        margin-bottom: 10px;
+    }
+    
+    input {
+        width: calc(66.66% - 10px);
+        padding: 8px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
+    
+    button {
+        width: 100%;
+        background-color: slateblue;
+        color: #fff;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    
+    button:hover {
+        background-color:slateblue;
+    }
+    
+    #resultTable {
+        margin-top: 20px;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    thead {
+        background-color: slateblue;
+        color: #fff;
+    }
+    
+    th, td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+    }
+    
+    th {
+        background-color: slateblue;
+        color: #fff;
+    }
+    
+</style>
+<script>
+    function addResult() {
+        var studentName = document.getElementById("studentName").value;
+        var subject1 = document.getElementById("subject1").value;
+        var marks1 = parseFloat(document.getElementById("marks1").value);
+    
+        var subject2 = document.getElementById("subject2").value;
+        var marks2 = parseFloat(document.getElementById("marks2").value);
+    
+        var subject3 = document.getElementById("subject3").value;
+        var marks3 = parseFloat(document.getElementById("marks3").value);
+    
+        var totalMarks = marks1 + marks2 + marks3;
+        var percentage = (totalMarks / 300) * 100;
+    
+        var grade;
+        if (percentage >= 90) {
+            grade = 'A';
+        } else if (percentage >= 80) {
+            grade = 'B';
+        } else if (percentage >= 70) {
+            grade = 'C';
+        } else if (percentage >= 60) {
+            grade = 'D';
+        } else {
+            grade = 'F';
+        }
+    
+        var resultBody = document.getElementById("resultBody");
+        var newRow = resultBody.insertRow(resultBody.rows.length);
+    
+        newRow.insertCell(0).innerHTML = studentName;
+        newRow.insertCell(1).innerHTML = subject1;
+        newRow.insertCell(2).innerHTML = marks1;
+        newRow.insertCell(3).innerHTML = subject2;
+        newRow.insertCell(4).innerHTML = marks2;
+        newRow.insertCell(5).innerHTML = subject3;
+        newRow.insertCell(6).innerHTML = marks3;
+        newRow.insertCell(7).innerHTML = percentage.toFixed(2) + "%";
+        newRow.insertCell(8).innerHTML = grade;
+    
+        // Clear form fields
+        document.getElementById("studentName").value = "";
+        document.getElementById("subject1").value = "";
+        document.getElementById("marks1").value = "";
+        document.getElementById("subject2").value = "";
+        document.getElementById("marks2").value = "";
+        document.getElementById("subject3").value = "";
+        document.getElementById("marks3").value = "";
+    }
+    
+</script>
