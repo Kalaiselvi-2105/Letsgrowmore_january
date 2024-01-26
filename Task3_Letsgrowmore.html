@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Enrollment Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        #form-container {
+            width: 50%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #result-container {
+            width: 50%;
+            background-color: #f2f2f2;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: calc(100% - 12px);
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        .gender-container {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-block;
+            text-align: center;
+            line-height: 20px;
+            background-color: #3498db;
+            color: #fff;
+            margin-right: 5px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        #students-list {
+            margin-top: 20px;
+        }
+
+        .student-details {
+            background-color: #fff;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div id="form-container">
+        <h2>Student Enrollment Form</h2>
+        <form id="enrollment-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="website">Website:</label>
+            <input type="url" id="website" name="website" required>
+
+            <label for="image-link">Image Link:</label>
+            <input type="url" id="image-link" name="image-link" required>
+
+            <label>Gender:</label>
+            <div class="gender-container">
+                <div class="circle">M</div>
+                <input type="radio" id="male" name="gender" value="Male" required>
+                <div class="circle">F</div>
+                <input type="radio" id="female" name="gender" value="Female" required>
+            </div>
+
+            <label for="skills">Skills:</label>
+            <select id="skills" name="skills" multiple required>
+                <option value="HTML">HTML</option>
+                <option value="Java">Java</option>
+                <option value="C">C</option>
+            </select>
+
+            <div>
+                <button type="button" onclick="register()">Register</button>
+                <button type="button" onclick="clearForm()">Clear</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="result-container">
+        <h2>Students List</h2>
+        <div id="students-list"></div>
+    </div>
+
+    <script>
+        var students = [];
+
+        function register() {
+            // Fetch form values
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var website = document.getElementById('website').value;
+            var imageLink = document.getElementById('image-link').value;
+            var gender = document.querySelector('input[name="gender"]:checked').value;
+            var skills = Array.from(document.getElementById('skills').selectedOptions).map(option => option.value);
+
+            // Add student details to the array
+            students.push({
+                name: name,
+                email: email,
+                website: website,
+                imageLink: imageLink,
+                gender: gender,
+                skills: skills
+            });
+
+            // Display results
+            displayStudentsList();
+            clearForm();
+        }
+
+        function displayStudentsList() {
+            var studentsListContainer = document.getElementById('students-list');
+            studentsListContainer.innerHTML = "";
+
+            students.forEach(function(student, index) {
+                var studentDetailsContainer = document.createElement('div');
+                studentDetailsContainer.className = 'student-details';
+                studentDetailsContainer.innerHTML = "<p><strong>Name:</strong> " + student.name + "</p>" +
+                    "<p><strong>Email:</strong> " + student.email + "</p>" +
+                    "<p><strong>Website:</strong> " + student.website + "</p>" +
+                    "<p><strong>Image Link:</strong> " + student.imageLink + "</p>" +
+                    "<p><strong>Gender:</strong> " + student.gender + "</p>" +
+                    "<p><strong>Skills:</strong> " + student.skills.join(', ') + "</p>";
+
+                studentsListContainer.appendChild(studentDetailsContainer);
+            });
+
+            // Show the result container
+            document.getElementById('result-container').style.display = 'block';
+        }
+
+        function clearForm() {
+            document.getElementById('enrollment-form').reset();
+        }
+    </script>
+</body>
+</html>
